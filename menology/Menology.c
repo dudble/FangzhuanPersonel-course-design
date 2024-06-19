@@ -3,7 +3,7 @@
 Copyright: 2024-2025
 Version: 1.0
 Date: 2024.6.17 
-Author: 段昫超
+Author: dudble
 Description：此程序用以实现月历的查询，Menology头文件包含了全局变量的声明
 
 **************************************************************************/
@@ -13,6 +13,7 @@ Description：此程序用以实现月历的查询，Menology头文件包含了�
 #include"Menology.h"
 
 
+//基姆拉尔森公式
 int calculation(int d,int m,int y)
 {
     int w = (d+2*m+3*(m+1)/5+y+y/4-y/100+y/400)%7;
@@ -49,16 +50,20 @@ int main(){
             n = 0;
         }
     }
-    
-    //scanf("%d %d",&year,&month);
+
+    //计算闰年
     int leap=0;
     if((year%4==0&&year%100!=0)||year%400==0)
     {
         leap = 1;
     }
+
+    //计算该月第一天为星期几
     int c_month = month;
     if(c_month<=2) c_month+=12;
     int w = calculation(1,c_month,c_month>2 ? year : year-1);
+
+    //依据该月第一天，将每一天计算出来
     int date[6][7] = {0};
     int d=1;
     for(int i=0;i<6;i++){
@@ -72,6 +77,7 @@ int main(){
             }
         }
     }
+
     printf("\n\n");
     printf("     %d 年 %d 月\n",year,month);
     for(int i=0;i<7;i++)
