@@ -1,41 +1,18 @@
-/*************************************************************************
+/********************************************************************************
 
 Copyright: 2024-2025
 Version: 1.0
 Date: 2024.6.17 
 Author: dudble
-Description：此程序用以实现月历的查询，Menology头文件包含了全局变量的声明
+Description：此程序用以实现月历的查询，Menology头文件包含了全局变量的声明与函数的定义
 
-**************************************************************************/
+*********************************************************************************/
 
 #include<stdio.h>
 #include<stdlib.h>
 #include"Menology.h"
 
 
-//基姆拉尔森公式
-int calculation(int d,int m,int y)
-{
-    int w = (d+2*m+3*(m+1)/5+y+y/4-y/100+y/400)%7;
-    return w;
-}
-
-void Print(int y,int m,int *d[])
-{
-    printf("\n\n");
-    printf("   %d 年 %d 月",&y,&m);
-    for(int i=0;i<7;i++)
-        printf(" %s",week[i]);
-    printf("/n");
-    for(int i=0;i<6;i++){
-        for(int j=0;j<7;j++){
-            if(d[i][j]==0) printf("   ");
-            else{
-                printf("%3d",d[i][j]);
-            }
-        }
-    }
-}
 
 int main(){
     int year,month;
