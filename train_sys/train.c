@@ -3,7 +3,7 @@
 Copyright: 2024-2025
 Version: 1.0
 Date: 2024.6.18 
-Author: 段昫超
+Author: double
 Description：此程序用以实现铁道信息的简单记录查询，train头文件包含了结构体的声明以及排序时所用函数
 
 **************************************************************************************/
@@ -18,7 +18,7 @@ void write(){
     printf("请输入新增车次\n"
            "格式：车次 始发站 终点站 发车时间 到站时间 总票数 余票数 金额\n");
     scanf("%s %s %s %s %s %d %d %d",msg.trip,msg.begin,msg.end,msg.begin_t,msg.end_t,&msg.total,&msg.left,&msg.money);
-    FILE *fp = fopen("message","a");
+    FILE *fp = fopen("message","a");//message文件在下没有提供，反正运行后自动就创建了（
     if(fp==NULL){
         printf("文件打开失败！\n");
         return ;
@@ -28,6 +28,8 @@ void write(){
     printf("\n");
 }
 
+
+//按照车次查询
 void find_t(){
 
     FILE *fp = fopen("message","r");
@@ -52,6 +54,7 @@ void find_t(){
     fclose(fp);
 }
 
+//按照出发站查询
 void find_begin(){
 
     FILE *fp = fopen("message","r");
@@ -77,6 +80,7 @@ void find_begin(){
     printf("\n");
 }
 
+//按照目标站查询
 void find_end(){
 
     FILE *fp = fopen("message","r");
@@ -103,6 +107,7 @@ void find_end(){
     fclose(fp);
 }
 
+//排序并输出
 void msg_sort(){
 
     FILE *fp = fopen("message","r");
@@ -119,7 +124,7 @@ void msg_sort(){
     message msg[n];
     fread(msg,sizeof(message),n,fp);
     qsort(msg,n,sizeof(message),cmp);
-    //insertion(msg,n);
+ 
     for(int i=0;i<n;i++){
         printf("%s次 %s至%s 由%s开往%s方向，总票数 %d ,余 %d,票价 %d 元\n",msg[i].trip,msg[i].begin_t,msg[i].end_t,msg[i].begin,msg[i].end,msg[i].total,msg[i].left,msg[i].money);
     }
