@@ -16,7 +16,7 @@ train_sys为一个简单的火车信息记录与查询系统
 
 navigation文件 一个简易导航系统
 
-###大二下数据库课程设计、Java课程设计
+### 大二下数据库课程设计、Java课程设计
 
 BookManager 是基于Mybatis lombok Maven的java课程设计，数据库使用mysql
 
