@@ -19,6 +19,7 @@ navigation文件 一个简易导航系统
 ### 大二下数据库课程设计、Java课程设计
 
 BookManager 是基于Mybatis lombok Maven的java课程设计，数据库使用mysql
+
 bookdata是在BookManager的数据库之基础上添加触发器、存储过程、视图，用于数据库课程设计的数据库
 
 以上
