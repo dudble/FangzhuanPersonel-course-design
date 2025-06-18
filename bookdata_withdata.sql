@@ -25,7 +25,8 @@ CREATE TABLE `account`  (
   `aid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`aid`) USING BTREE
+  PRIMARY KEY (`aid`) USING BTREE,
+  INDEX `name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -68,21 +69,21 @@ CREATE TABLE `book`  (
   `bid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `publish` int(255) NULL DEFAULT NULL,
   `remain` int(4) NOT NULL DEFAULT 233,
-  PRIMARY KEY (`bid`) USING BTREE
+  PRIMARY KEY (`bid`) USING BTREE,
+  INDEX `name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (1, '深入理解计算机系统', NULL, NULL, 224);
-INSERT INTO `book` VALUES (2, '自项而下计算机网络', NULL, NULL, 225);
-INSERT INTO `book` VALUES (3, '算法导论', NULL, NULL, 0);
-INSERT INTO `book` VALUES (4, '朝鲜王朝500年', NULL, NULL, 233);
-INSERT INTO `book` VALUES (5, '太平记', NULL, NULL, 230);
-INSERT INTO `book` VALUES (6, '今昔物语集', NULL, NULL, 232);
-INSERT INTO `book` VALUES (7, '计算机程序的构造与解释', NULL, NULL, 232);
+INSERT INTO `book` VALUES (1, '深入理解计算机系统', NULL, 224);
+INSERT INTO `book` VALUES (2, '自项而下计算机网络', NULL, 225);
+INSERT INTO `book` VALUES (3, '算法导论', NULL, 0);
+INSERT INTO `book` VALUES (4, '朝鲜王朝500年', NULL, 233);
+INSERT INTO `book` VALUES (5, '太平记', NULL, 230);
+INSERT INTO `book` VALUES (6, '今昔物语集', NULL, 232);
+INSERT INTO `book` VALUES (7, '计算机程序的构造与解释', NULL, 232);
 
 -- ----------------------------
 -- Table structure for borrow
@@ -133,7 +134,8 @@ CREATE TABLE `publishing`  (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `legal` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`pid`) USING BTREE
+  PRIMARY KEY (`pid`) USING BTREE,
+  INDEX `name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
