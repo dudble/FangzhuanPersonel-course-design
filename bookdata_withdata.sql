@@ -155,13 +155,41 @@ DROP VIEW IF EXISTS `acc_borrowed`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `acc_borrowed` AS select `a`.`aid` AS `aid`,`a`.`name` AS `account_name`,`b`.`name` AS `book_name`,`b`.`bid` AS `bid` from ((`account` `a` left join `borrow` on((`borrow`.`aid` = `a`.`aid`))) left join `book` `b` on((`borrow`.`bid` = `b`.`bid`)));
 
 -- ----------------------------
+-- Procedure structure for add_book
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `add_book`;
+delimiter ;;
+CREATE PROCEDURE `add_book`(name VARCHAR(255), author VARCHAR(255), remain INT, pid INT)
+BEGIN
+ 
+  DECLARE a INT DEFAULT 0;
+  
+  if EXISTS(SELECT * from publishing WHERE publishing.pid = pid) THEN
+  
+    INSERT INTO book(name, author, remain) VALUES(name, author, remain);
+    
+    SET a = LAST_INSERT_ID();
+  
+    INSERT INTO publish(bid, pid) VALUES(a, pid);
+  
+  END if;
+  
+  if a = 0 then 
+    SELECT 'The publishing is not exist';
+  end if;
+  
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for back_book
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `back_book`;
 delimiter ;;
 CREATE PROCEDURE `back_book`(aid INT, bid INT)
 BEGIN
-  #Routine body goes here...
+
   IF EXISTS(SELECT * FROM borrow WHERE borrow.aid = aid and borrow.bid = bid) THEN
     
     UPDATE book set remain = remain + 1 WHERE book.bid = bid;
@@ -201,11 +229,54 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for publish_book
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `publish_book`;
+delimiter ;;
+CREATE PROCEDURE `publish_book`(bid INT, pid INT)
+BEGIN
+  DECLARE a INT DEFAULT 0;
+  
+  if NOT EXISTS(SELECT * from publish WHERE publish.bid = bid) THEN
+    
+    SET a = 1;
+  
+    if EXISTS(SELECT * from book WHERE book.bid = bid) 
+      AND EXISTS(SELECT * from publishing WHERE publishing.pid = pid) THEN
+  
+      INSERT INTO publish(bid, pid) VALUES(bid, pid);
+    
+      SET a = 2;
+      
+    END if;
+  
+  END if;
+  
+  IF a = 0 THEN
+    SELECT 'This book had a publishing' AS message;
+  ELSEIF a = 1 THEN
+    SELECT 'This book or publishing is not exist' AS message;
+  END IF;
+  
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Triggers structure for table book
 -- ----------------------------
 DROP TRIGGER IF EXISTS `del_book`;
 delimiter ;;
 CREATE TRIGGER `del_book` BEFORE DELETE ON `book` FOR EACH ROW delete from publish where publish.bid = old.bid
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table account
+-- ----------------------------
+DROP TRIGGER IF EXISTS `del_account`;
+delimiter ;;
+CREATE TRIGGER `del_account` BEFORE DELETE ON `account` FOR EACH ROW delete from borrow where borrow.aid = old.aid
 ;;
 delimiter ;
 
