@@ -22,4 +22,8 @@ BookManager 是基于Mybatis lombok Maven的java课程设计，数据库使用my
 
 bookdata是在BookManager的数据库之基础上添加触发器、存储过程、视图，用于数据库课程设计的数据库
 
+### 大三移动应用开发
+
+dmzj是在鸿蒙系统上手撕的一个动漫之家
+
 以上
